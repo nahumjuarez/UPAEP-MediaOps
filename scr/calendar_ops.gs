@@ -2,7 +2,7 @@
 
 function _requireCalendarApi() {
   if (typeof Calendar === 'undefined' || !Calendar.Events) {
-    throw new Error('⚠️ API Calendar no habilitada. Ve a Servicios (+) y añade "Google Calendar API".');
+    throw new Error('API Calendar no habilitada. Ve a Servicios (+) y añade "Google Calendar API".');
   }
 }
 
