@@ -1,7 +1,7 @@
 # UPAEP MediaOps
 Automatización de cobertura institucional (foto/video) para eventos UPAEP: sincroniza calendario, asigna becarios por disponibilidad y fairness, gestiona RSVP y reemplazos, y cierra el ciclo con evaluaciones, puntos y dashboards.
 
-## Qué hace (en cristiano)
+## Qué hace
 - **Lee eventos** desde un calendario fuente (eventos institucionales).
 - Los refleja en una hoja (`Eventos`) y detecta **cambios / cancelaciones / desaparecidos**.
 - **Asigna** becarios automáticamente (o sugiere si estás en modo SEMI).
@@ -46,7 +46,7 @@ Claves típicas:
 6) Ejecuta: `instalarDisparadores()` para automatización.
 
 ## Uso diario
-- Menú en la hoja: **📷 Servicio Becario**
+- Menú en la hoja: **Servicio Becario**
   - Abrir Panel de Control
   - Sincronizar Calendario
   - Asignar Pendientes
@@ -116,4 +116,4 @@ Luego corre: `aplicarOverridesManuales()`
 - Logs exportables (CSV) para auditorías
 
 ## Licencia
-Apache 2.0 (o la que defina el repositorio).
+MIT License
