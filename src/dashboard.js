@@ -29,11 +29,31 @@ var SBEDashboard = (function () {
         ['Sistema', 'Warnings en Log', countLogsByLevel(logs, 'WARN'), now],
         ['Sistema', 'Errores en Log', countLogsByLevel(logs, 'ERROR'), now],
         ['RSVP', 'Vencidos', countExpiredRsvp(eventos), now],
-        ['RSVP', 'Pendientes', countByStatus(eventos, 'PENDIENTE_RSVP'), now]
+        ['RSVP', 'Pendientes', countByStatus(eventos, 'PENDIENTE_RSVP'), now],
+        ['Outputs', 'Eventos con codigo', countNonBlank(eventos, 'CodigoEvento'), now],
+        ['Outputs', 'Eventos sin codigo', countBlank(eventos, 'CodigoEvento'), now],
+        ['Outputs', 'Eventos con folder name', countNonBlank(eventos, 'FolderName'), now],
+        ['Outputs', 'Eventos sin folder name', countBlank(eventos, 'FolderName'), now],
+        ['Outputs', 'Eventos con FechaTag', countNonBlank(eventos, 'FechaTag'), now],
+        ['Outputs', 'Previews de correo generados', countByField(eventos, 'BecarioEmailStatus', 'PREVIEW_GENERADO'), now],
+        ['Outputs', 'Resumen admin generado', countByField(eventos, 'AdminDigestStatus', 'PREVIEW_GENERADO'), now],
+        ['Tipos de evento', 'Con EventType', countNonBlank(eventos, 'EventType'), now],
+        ['Tipos de evento', 'Sin EventType', countBlank(eventos, 'EventType'), now],
+        ['Tipos de evento', 'Con sugerencia', countNonBlank(eventos, 'EventTypeSuggested'), now],
+        ['Drive temporal', 'Con DriveFolderUrl', countNonBlank(eventos, 'DriveFolderUrl'), now],
+        ['Flickr', 'Con FlickrUrl', countNonBlank(eventos, 'FlickrUrl'), now]
       ];
 
       SBEConfig.STATUS.forEach(function (status) {
         rows.push(['Eventos', status, countByStatus(eventos, status), now]);
+      });
+
+      SBEConfig.UPLOAD_STATUS.forEach(function (status) {
+        rows.push(['UploadStatus', status, countByField(eventos, 'UploadStatus', status), now]);
+      });
+
+      SBEConfig.ARCHIVE_STATUS.forEach(function (status) {
+        rows.push(['ArchiveStatus', status, countByField(eventos, 'ArchiveStatus', status), now]);
       });
 
       if (rows.length > 0) {
@@ -57,6 +77,24 @@ var SBEDashboard = (function () {
   function countByStatus(eventos, status) {
     return eventos.filter(function (evento) {
       return String(evento.Estado || '') === status;
+    }).length;
+  }
+
+  function countByField(eventos, field, value) {
+    return eventos.filter(function (evento) {
+      return String(evento[field] || '') === value;
+    }).length;
+  }
+
+  function countBlank(rows, field) {
+    return rows.filter(function (row) {
+      return String(row[field] || '').trim() === '';
+    }).length;
+  }
+
+  function countNonBlank(rows, field) {
+    return rows.filter(function (row) {
+      return String(row[field] || '').trim() !== '';
     }).length;
   }
 

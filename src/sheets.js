@@ -28,6 +28,9 @@ var SBESheets = (function () {
       });
 
       seedConfig();
+      seedDefaultRows(SBEConfig.SHEETS.EVENT_TYPES, 'EventType', SBEConfig.getDefaultEventTypeRows());
+      seedDefaultRows(SBEConfig.SHEETS.EVENT_TYPE_RULES, 'RuleId', SBEConfig.getDefaultEventTypeRuleRows());
+      seedOutputTemplates();
       SBEDashboard.refreshDashboard({
         skipLock: true
       });
@@ -98,6 +101,42 @@ var SBESheets = (function () {
     SBEConfig.getDefaultConfigRows().forEach(function (row) {
       if (!existingKeys[row[0]]) {
         valuesToAppend.push([row[0], row[1], row[2], now]);
+      }
+    });
+
+    if (valuesToAppend.length > 0) {
+      sheet.getRange(sheet.getLastRow() + 1, 1, valuesToAppend.length, valuesToAppend[0].length)
+        .setValues(valuesToAppend);
+    }
+  }
+
+  function seedOutputTemplates() {
+    var now = new Date();
+    var rows = SBEConfig.getDefaultOutputTemplateRows().map(function (row) {
+      var cloned = row.slice();
+      cloned[5] = now;
+      return cloned;
+    });
+    seedDefaultRows(SBEConfig.SHEETS.OUTPUT_TEMPLATES, 'TemplateKey', rows);
+  }
+
+  function seedDefaultRows(sheetName, keyHeader, defaultRows) {
+    var sheet = getOrCreateSheet(sheetName);
+    ensureHeaders(sheet, SBEConfig.getColumns(sheetName));
+
+    var existing = {};
+    readObjects(sheet).forEach(function (row) {
+      var value = String(row[keyHeader] || '').trim();
+      if (value) {
+        existing[value] = true;
+      }
+    });
+
+    var valuesToAppend = [];
+    (defaultRows || []).forEach(function (row) {
+      var keyValue = String(row[0] || '').trim();
+      if (keyValue && !existing[keyValue]) {
+        valuesToAppend.push(row);
       }
     });
 

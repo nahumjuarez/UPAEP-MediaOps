@@ -26,6 +26,46 @@ function checkRsvpAndReplace() {
   return SBERsvp.checkRsvpAndReplace();
 }
 
+function inferMissingEventTypes() {
+  return SBEOutputs.inferMissingEventTypes();
+}
+
+function validateEventTypeRules() {
+  return SBEOutputs.validateEventTypeRules();
+}
+
+function generateMissingEventCodes() {
+  return SBEOutputs.generateMissingEventCodes();
+}
+
+function generateOutputFields() {
+  return SBEOutputs.generateOutputFields();
+}
+
+function generateFolderNames() {
+  return SBEOutputs.generateFolderNames();
+}
+
+function previewBecarioInstructionEmail() {
+  return SBEOutputs.previewBecarioInstructionEmail();
+}
+
+function previewWeeklyAdminDigest() {
+  return SBEOutputs.previewWeeklyAdminDigest();
+}
+
+function validateOutputReadiness() {
+  return SBEOutputs.validateOutputReadiness();
+}
+
+function generateFechaTag(date) {
+  return SBEOutputs.generateFechaTag(date);
+}
+
+function generateBecarioSlug(nombre) {
+  return SBEOutputs.generateBecarioSlug(nombre);
+}
+
 function refreshDashboard() {
   return SBEDashboard.refreshDashboard();
 }

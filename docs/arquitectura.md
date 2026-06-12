@@ -17,6 +17,7 @@ El sistema vive en Google Apps Script y usa Google Sheets como almacenamiento op
 - `availability.js`: reglas de disponibilidad.
 - `assignment.js`: scoring, propuesta y asignacion segun modo operativo.
 - `rsvp.js`: revision de RSVP y reemplazos.
+- `outputs.js`: inferencia de tipos de evento, codigos, campos copiables, previews y validaciones de outputs.
 
 ## Principios
 
@@ -26,6 +27,7 @@ El sistema vive en Google Apps Script y usa Google Sheets como almacenamiento op
 - `LockService` en operaciones criticas que escriben hojas o consultan/actualizan estado.
 - `SpreadsheetApp` y `CalendarApp` como APIs principales.
 - Logs estructurados para trazabilidad.
+- La Fase 1.5 solo escribe en Sheets y `Log`; no envia correo, no crea carpetas Drive y no publica en Flickr.
 
 ## Flujo de datos
 
@@ -34,5 +36,9 @@ El sistema vive en Google Apps Script y usa Google Sheets como almacenamiento op
 3. `assignPendingEvents()` evalua becarios y propone/asigna segun `Config.MODE`.
 4. `createAssignmentEvent()` crea evento de asignacion en Calendar e invita al becario cuando aplica.
 5. `checkRsvpAndReplace()` revisa invitaciones, confirma asistencia y maneja reemplazos.
-6. `refreshDashboard()` resume estado operativo.
-7. `runDiagnostics()` valida configuracion, calendarios, columnas y datos incompletos.
+6. `inferMissingEventTypes()` clasifica o sugiere tipos desde reglas editables.
+7. `generateMissingEventCodes()` crea codigos por prefijo y ano sin cambiar codigos existentes.
+8. `generateOutputFields()` y `generateFolderNames()` preparan campos copiables para operacion manual.
+9. `previewBecarioInstructionEmail()` y `previewWeeklyAdminDigest()` guardan previews en `OutputPreviews`.
+10. `refreshDashboard()` resume estado operativo.
+11. `runDiagnostics()` valida configuracion, calendarios, columnas, tipos, plantillas y outputs incompletos.

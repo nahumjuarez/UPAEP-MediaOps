@@ -8,8 +8,17 @@ var SBEMenu = (function () {
       .addItem('Asignar eventos pendientes', 'assignPendingEvents')
       .addItem('Revisar RSVP y reemplazos', 'checkRsvpAndReplace')
       .addSeparator()
+      .addItem('Inferir tipos de evento', 'inferMissingEventTypes')
+      .addItem('Validar reglas de tipos', 'validateEventTypeRules')
+      .addItem('Generar codigos faltantes', 'generateMissingEventCodes')
+      .addItem('Generar outputs de eventos', 'generateOutputFields')
+      .addItem('Generar nombres de carpetas', 'generateFolderNames')
+      .addItem('Previsualizar correo de becario', 'previewBecarioInstructionEmail')
+      .addItem('Previsualizar resumen semanal admin', 'previewWeeklyAdminDigest')
+      .addItem('Validar outputs', 'validateOutputReadiness')
+      .addSeparator()
       .addItem('Actualizar dashboard', 'refreshDashboard')
-      .addItem('Ejecutar diagnosticos', 'runDiagnostics')
+      .addItem('Diagnostico del sistema', 'runDiagnostics')
       .addToUi();
   }
 

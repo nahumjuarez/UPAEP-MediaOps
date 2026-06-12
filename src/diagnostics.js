@@ -14,6 +14,7 @@ var SBEDiagnostics = (function () {
       validateEventos(issues);
       validateBecarios(issues);
       validateBusyBlocks(issues);
+      issues = issues.concat(SBEOutputs.validateOutputReadiness());
 
       if (issues.length === 0) {
         SBELogger.logInfo('runDiagnostics', 'Diagnostico sin errores criticos.', {});
@@ -105,6 +106,14 @@ var SBEDiagnostics = (function () {
       if (evento.Estado && SBEConfig.STATUS.indexOf(String(evento.Estado)) === -1) {
         issues.push('Estado no valido en Eventos fila ' + evento._rowNumber + ': ' + evento.Estado);
       }
+      if (evento.UploadStatus && SBEConfig.UPLOAD_STATUS.indexOf(String(evento.UploadStatus)) === -1) {
+        issues.push('UploadStatus no valido en Eventos fila ' + evento._rowNumber + ': ' + evento.UploadStatus);
+      }
+      validateOutputStatus(evento.BecarioEmailStatus, 'BecarioEmailStatus', evento._rowNumber, issues);
+      validateOutputStatus(evento.AdminDigestStatus, 'AdminDigestStatus', evento._rowNumber, issues);
+      if (evento.ArchiveStatus && SBEConfig.ARCHIVE_STATUS.indexOf(String(evento.ArchiveStatus)) === -1) {
+        issues.push('ArchiveStatus no valido en Eventos fila ' + evento._rowNumber + ': ' + evento.ArchiveStatus);
+      }
       if (!evento.Titulo) {
         issues.push('Evento sin Titulo en fila ' + evento._rowNumber + '.');
       }
@@ -128,6 +137,12 @@ var SBEDiagnostics = (function () {
         }
       }
     });
+  }
+
+  function validateOutputStatus(value, fieldName, rowNumber, issues) {
+    if (value && SBEConfig.OUTPUT_STATUS.indexOf(String(value)) === -1) {
+      issues.push(fieldName + ' no valido en Eventos fila ' + rowNumber + ': ' + value);
+    }
   }
 
   function validateBecarios(issues) {
