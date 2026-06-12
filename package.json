@@ -1,0 +1,17 @@
+{
+  "name": "servicio-becario-emergencia-verano-2026",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Sistema operativo en Google Apps Script para administrar Servicio Becario Emergencia Verano 2026.",
+  "scripts": {
+    "login": "clasp login",
+    "create": "clasp create --type sheets --title \"Servicio Becario Emergencia Verano 2026\"",
+    "push": "clasp push",
+    "pull": "clasp pull",
+    "open": "clasp open",
+    "status": "clasp status"
+  },
+  "devDependencies": {
+    "@google/clasp": "^3.3.0"
+  }
+}
